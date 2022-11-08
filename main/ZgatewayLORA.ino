@@ -32,6 +32,9 @@
 #  include <LoRa.h>
 #  include <SPI.h>
 #  include <Wire.h>
+#  include "SSD1306.h"  // tjl adder
+
+SSD1306 display(0x3c, 4, 15); // tjl adder
 
 void setupLORA() {
   SPI.begin(LORA_SCK, LORA_MISO, LORA_MOSI, LORA_SS);
