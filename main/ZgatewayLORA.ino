@@ -33,11 +33,17 @@
 #  include <SPI.h>
 #  include <Wire.h>
 
-#  include "SSD1306.h"  // tjl adder
+#  include "SSD1306.h"  // tlong adder
 
-SSD1306 display(0x3c, 4, 15); // tjl adder
+SSD1306 display(0x3c, 4, 15); // tlong adder
 
 void setupLORA() {
+  // tlong adder. OLED Reset for LORA TTGO specific pins
+  pinMode(16,OUTPUT);
+  digitalWrite(16, LOW);    // set GPIO16 low to reset OLED
+  delay(50); 
+  digitalWrite(16, HIGH); // while OLED is running, must set GPIO16 in high.
+
   SPI.begin(LORA_SCK, LORA_MISO, LORA_MOSI, LORA_SS);
   LoRa.setPins(LORA_SS, LORA_RST, LORA_DI0);
 
@@ -46,6 +52,11 @@ void setupLORA() {
     while (1)
       ;
   }
+  // tlong adder. Init OLED display
+  display.init();
+  display.flipScreenVertically();  
+  display.setFont(ArialMT_Plain_10);
+
   LoRa.receive();
   Log.notice(F("LORA_SCK: %d" CR), LORA_SCK);
   Log.notice(F("LORA_MISO: %d" CR), LORA_MISO);
@@ -60,6 +71,13 @@ void setupLORA() {
   LoRa.setPreambleLength(LORA_PREAMBLE_LENGTH);
   LoRa.setSyncWord(LORA_SYNC_WORD);
   Log.trace(F("ZgatewayLORA setup done" CR));
+
+  // tlong adder. OLED print Ready
+  display.clear();
+  display.setFont(ArialMT_Plain_10);
+  display.setTextAlignment(TEXT_ALIGN_LEFT);
+  display.drawString(0 , 15 , "LORA GW Ready");
+  display.display();  
 }
 
 void LORAtoMQTT() {
@@ -83,6 +101,15 @@ void LORAtoMQTT() {
     LORAdata["pferror"] = (float)LoRa.packetFrequencyError();
     LORAdata["packetSize"] = (int)packetSize;
     LORAdata["message"] = (char*)packet.c_str();
+
+    // tlong adder. OLED print out
+    display.clear();
+    display.setFont(ArialMT_Plain_10);
+    display.setTextAlignment(TEXT_ALIGN_LEFT);   
+    display.drawString(0, 0, "RSSI: " + String((int)LoRa.packetRssi(), DEC) + " RxBytes: " + String((int)packetSize, DEC) );
+    display.drawStringMaxWidth(0 , 15 , 128, packet);
+    display.display(); 
+    
     pub(subjectLORAtoMQTT, LORAdata);
     if (repeatLORAwMQTT) {
       Log.trace(F("Pub LORA for rpt" CR));

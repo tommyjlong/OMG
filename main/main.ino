@@ -318,6 +318,24 @@ void pub(const char* topicori, JsonObject& data) {
   digitalWrite(LED_SEND_RECEIVE, LED_SEND_RECEIVE_ON);
   String topic = String(mqtt_topic) + String(gateway_name) + String(topicori);
 #if valueAsATopic
+#  ifdef ZgatewayLORA  //tlong adder
+  StaticJsonDocument<200> doc;
+  String message = data["message"];
+  if (message != "null" && message != 0) {
+    //Log.notice(F("lora msg %s" CR), message.c_str());
+    auto error = deserializeJson(doc, message);
+    if (error) {
+      Log.error(F("deserialize Lora msg failed: %s" CR), error.c_str());
+    } else {
+      String node_id = doc["node_id"];
+      if (node_id != "null" && node_id != 0) { 
+        Log.notice(F("Appending node_id %s to topic." CR), node_id.c_str());
+        topic = topic + "/" + node_id;
+      }  
+    }  
+    
+  }
+#  endif
 #  ifdef ZgatewayPilight
   String value = data["value"];
   String protocol = data["protocol"];
