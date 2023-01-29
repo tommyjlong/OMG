@@ -1,57 +1,18 @@
-[![Community forum](https://img.shields.io/badge/community-forum-brightgreen.svg)](https://community.openmqttgateway.com)
+# Open MQTT Gateway - LoRa Sensors
 
-![Build](https://github.com/1technophile/OpenMQTTGateway/workflows/Build/badge.svg?branch=development)
-![Check Code Format](https://github.com/1technophile/OpenMQTTGateway/workflows/Check%20Code%20Format/badge.svg?branch=development)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/1technophile/openmqttgateway.svg)](http://isitmaintained.com/project/1technophile/openmqttgateway "Percentage of issues still open")
+This is a modified version of Open MQTT Gateway.  This is part of a LoRa mailbox sensor project that you can find more details about [here](https://tommyjlong.wixsite.com/home1/post/lora-mailbox-sensor-for-home-assistant).
 
-[![](https://github.com/1technophile/OpenMQTTGateway/blob/development/docs/img/OpenMQTTGateway.png)](https://community.openmqttgateway.com)
+OMG has been modified to use OMG's "ValueAsATopic" capability for LoRa sensors that provide a node-id in their JSON message payload.  "ValueAsATopic" is a configurable item in OMG that, when enabled, allows some "value" in the payload received from a sensor to be tacked onto the end of the MQTT topic as a subtopic.  This "ValueAsATopic" however does not exist in OMG for LoRa based sensors, so modifications were made to OMG that would allow it to parse the node-id from the message and tack it onto the MQTT topic.  For example, if the node-id is 12345678, the MQTT topic will now look something like: <br/>
+` /home/OpenMQTTGateway_ESP32_LORA/LORAtoMQTT/12345678`
 
-OpenMQTTGateway project goal is to concentrate in one firmware different technologies and protocols, decreasing by the way the number of physical bridges needed, and hiding the different technologies singularity behind a simple & wide spread communication protocol; MQTT.
+Modifications were also made to make use of a LILYGO TTGO v1 OLED display.  When the OMG first boots up, it will display a simple message saying the LORA GW is Ready, and later on will display the LoRa message it received from a LoRa Sensor. 
 
-## Documentation
+Finally, there are a couple of 3D printed parts that are available for the LILYGO TTGO v1 OLED display and its antenna.
 
-The documentation is [here](https://docs.openmqttgateway.com)
-
-The reference sheet, with the list of all functions, pinouts is [here](https://docs.google.com/spreadsheets/d/1_5fQjAixzRtepkykmL-3uN3G5bLfQ0zMajM9OBZ1bx0/edit#gid=0)
-
-## Upload
-
-Upload OpenMQTTGateway directly from the [upload page](https://docs.openmqttgateway.com/upload/web-install.html) (no additional software required) or [build your own configuration](https://docs.openmqttgateway.com/upload/builds.html) with [PlatformIO](https://platformio.org/) or [Arduino IDE](https://www.arduino.cc/en/software)
-
-## Compatible items
-
-* [List of supported devices](https://compatible.openmqttgateway.com/index.php/devices/), door/window sensors, PIR sensors, smoke detectors, weather stations...
-
-* [List of compatible boards (Off the shelf or DIY) is available](https://compatible.openmqttgateway.com/index.php/boards/), RF Bridge, IR, BLE gateways...
-
-*Running on a computer*
-If you want to use the BLE decoding capabilities of OpenMQTTGateway with a Raspberry Pi, Windows or Unix PC you can now leverage [Theengs Gateway](https://theengs.github.io/gateway/).
-
-* [List of compatible components to build your gateway](https://compatible.openmqttgateway.com/index.php/parts/), DHT, RF, IR emitters and receivers...
-
-## Compatible controllers, saas or software
-
-* [Home Assistant](https://docs.openmqttgateway.com/integrate/home_assistant.html)
-
-* [OpenHAB](https://docs.openmqttgateway.com/integrate/openhab2.html)
-
-* [NodeRed](https://docs.openmqttgateway.com/integrate/node_red.html)
-
-* [AWS-IOT](https://docs.openmqttgateway.com/integrate/aws_iot.html)
-
-## Contributors ✨
-
-Thanks goes to these wonderful [people](https://github.com/1technophile/OpenMQTTGateway/graphs/contributors) who helped OpenMQTTGateway on Github and to the users contributions into the [community](https://community.openmqttgateway.com/).
-
-## Support
-
-For Questions or Support please don't open an issue, first go to the [docs](https://docs.openmqttgateway.com) and if you don't find your answer there, you can post your question in [the community forum](https://community.openmqttgateway.com)
-
-## Help
-
-If you like the project and/or used it please consider supporting it! It can be done in different ways:
-* Helping other users in the [community](https://community.openmqttgateway.com)
-* [Contribute](development) to the [code](https://github.com/1technophile/OpenMQTTGateway) or the [documentation](https://docs.openmqttgateway.com)
-* Buy devices, boards or parts from the [compatible web site](https://compatible.openmqttgateway.com), the devices and parts linked use affiliated links.
-* Donate or sponsor the project [developpers](https://github.com/1technophile/OpenMQTTGateway/graphs/contributors)
-* Make a video or a blog article about what you have done with [OpenMQTTGateway](https://docs.openmqttgateway.com) and share it to the [community](https://community.openmqttgateway.com)
+# Credits
+* Open MQTT Gateway.  
+  You can find more details by going to there github repository [here](https://github.com/1technophile/OpenMQTTGateway) as well as their community forum here: 
+  [![Community forum](https://img.shields.io/badge/community-forum-brightgreen.svg)](https://community.openmqttgateway.com)
+  [![](https://github.com/1technophile/OpenMQTTGateway/blob/development/docs/img/OpenMQTTGateway.png)](https://community.openmqttgateway.com)
+* 3D Printed Part for Lilygo TTGO <br/>
+  The 3D part originated from [Neodyne](https://www.thingiverse.com/thing:3771284), but I heavily modified it so that the top side could more easily fit into the casing, and I changed the antenna orientation too.
