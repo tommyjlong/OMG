@@ -13,6 +13,5 @@ Finally, there are a couple of 3D printed parts that are available for the LILYG
 * Open MQTT Gateway.  
   You can find more details by going to there github repository [here](https://github.com/1technophile/OpenMQTTGateway) as well as their community forum here: 
   [![Community forum](https://img.shields.io/badge/community-forum-brightgreen.svg)](https://community.openmqttgateway.com)
-  [![](https://github.com/1technophile/OpenMQTTGateway/blob/development/docs/img/OpenMQTTGateway.png)](https://community.openmqttgateway.com)
 * 3D Printed Part for Lilygo TTGO <br/>
-  The 3D part originated from [Neodyne](https://www.thingiverse.com/thing:3771284), but I heavily modified it so that the top side could more easily fit into the casing, and I changed the antenna orientation too.
+  The 3D part originated from [Neodyme at Thingiverse](https://www.thingiverse.com/thing:3771284), but I heavily modified it so that the top side could more easily fit into the casing, and I changed the antenna orientation too.
